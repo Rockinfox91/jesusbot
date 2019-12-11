@@ -1,35 +1,13 @@
 import discord
-import os # On récupère le fichier de dictionnaire
-folder = os.chdir("C:/Users/lucas/Desktop/ytbot")
 
 TOKEN = "MzAzMzI3MDk4NDc3NzQwMDMy.Xe-p2g.ePp-EbWI7C5_iRs9N-P4f8_jXpI"
 
 client = discord.Client()
 
+dictionnaire = ["Babouin","Hitler","Pomme","Poire","Prune","Pierre","Caca","Pipi","Nutella","Cafe","Staline"]
+
 from random import randint
 import math as m
-
-def dico(nom):
-    f = open(nom,'r')
-    all_text = f.readlines()
-    f.close()
-    liste = []
-    for mot in all_text[:-1]:
-        i = mot[:-1]
-        liste.append(i)
-    liste.append(all_text[-1])
-    return liste
-    
-def addMot(nom,mot):
-    f = open(nom,'r')
-    all_text = f.readlines()
-    f.close()
-    total = ''
-    for word in all_text:
-        total += word
-    f = open(nom,"w")
-    f.write(total + mot + '\n')
-    f.close()
 
 def pickword(dictionnaire):    
     n = randint(0,len(dictionnaire)-1)
@@ -180,10 +158,7 @@ async def on_message(message):
         
         
     if message.content.startswith('?pendu'):
-        if message.content.startswith('?pendu add') and not PenduActivate:
-            addMot("dico_pendu.txt",message.content[11:])
-            await message.channel.send("Mot ajouté ^^")
-        elif not PenduActivate and not trouveactif:
+        if not PenduActivate and not trouveactif:
             mot,listVisible,compteur = pickword(dico("dico_pendu.txt"))
             await message.channel.send("Très bien, le seigneur a choisi un mot et vous devez le trouver à l'aide du PENDUUUUUU, vous avez 7 vies.\n Pour répondre envoyez ?pendu [lettre].")
             PenduActivate = True
